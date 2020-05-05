@@ -8,6 +8,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import static com.example.th113.SettingsFragment.nameSelection;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -24,10 +26,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private DrawerLayout drawer;
     TextView textView;
     TextView teksti_muokkaa;
+    TextView teksti_nimi;
     Button button;
     EditText edit;
     ArrayList<String> lista = new ArrayList<>();
     int allowed;
+
+    //luokkamuuttuja fragmentista
+    String writtenName = nameSelection;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +52,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         textView = findViewById(R.id.textView2);
         teksti_muokkaa = findViewById(R.id.textView);
+        teksti_nimi = findViewById(R.id.textView3);
+
+        textView.setText("Malli tekstistä. Voit asetuksissa muuttaa tekstin ulkonäköä, kuten fonttikokoa, leveyttä, korkeutta sekä rivimäärää.");
         teksti_muokkaa.setText("Tämä teksti on muokattavissasi");
+
     }
 
     @Override
@@ -55,10 +65,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        try{
+            System.out.println(writtenName);
+            teksti_nimi.setText(writtenName);
+        }catch (Exception e){
+
+        }
+    }
+
+    @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.nav_settings:
                 getSupportFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.fragment_container, new SettingsFragment()).commit();
+
                 break;
         }
         drawer.closeDrawer(GravityCompat.START);
@@ -102,16 +124,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         String teksti = edit.getText().toString();
         if (allowed == 1){
             teksti_muokkaa.setText(teksti);
+            textView.setText("Malli tekstistä. Voit asetuksissa muuttaa tekstin ulkonäköä, kuten fonttikokoa, leveyttä, korkeutta sekä rivimäärää.");
         } else if (allowed == 0) {
             teksti_muokkaa.setText("Muokkaus pois käytöstä");
             textView.setText(teksti);
-            System.out.println("Ei muokkausta, toimii");
         }else{
             teksti_muokkaa.setText("Muokkaus pois käytöstä");
             textView.setText(teksti);
-            System.out.println("Ei valintaa, toimii");
         }
     }
+
 
 
 }

@@ -1,12 +1,15 @@
 package com.example.th113;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Switch;
 
 import androidx.annotation.NonNull;
@@ -21,14 +24,23 @@ public class SettingsFragment extends Fragment {
     EditText Leveys;
     EditText Rivit;
     EditText Väri;
+    EditText kysyNimi;
     Button button;
     Button button_s;
+    Button button_name;
+    Spinner spinner;
     ArrayList<String> lista = new ArrayList<>();
+    ArrayList<String> kieli_lista = new ArrayList<>();
+
+    public static String nameSelection;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
+        kieli_lista.add("Valitse kieli");
+        kieli_lista.add("Suomi");
+        kieli_lista.add("Ruotsi");
+        kieli_lista.add("Englanti");
         return inflater.inflate(R.layout.fragment_settings, container, false);
     }
 
@@ -37,9 +49,11 @@ public class SettingsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         button = getView().findViewById(R.id.button);
         button_s = getView().findViewById(R.id.button3);
+        button_name = getView().findViewById(R.id.button4);
+        spinner = (Spinner) getView().findViewById(R.id.spinner);
 
 
-        ////// button for teditig text////////////////////////////////////////////////////////
+        ////// button for editig text////////////////////////////////////////////////////////
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,7 +78,7 @@ public class SettingsFragment extends Fragment {
         });
         ////////////////////////////////////////////////////////////////////////////////////////
 
-        ////// button for switch///////////////////////////////////////////////////////////////
+        ////// button for switch ///////////////////////////////////////////////////////////////
 
         button_s.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,6 +96,39 @@ public class SettingsFragment extends Fragment {
         });
         ///////////////////////////////////////////////////////////////////////////////////////
 
+        ////// button for getting the name ///////////////////////////////////////////////////////////////
+
+        button_name.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            kysyNimi = getView().findViewById(R.id.editText5);
+            String nimi = kysyNimi.getText().toString();
+            nameSelection = nimi;
+            sendToActivity();
+            }
+
+        });
+        ///////////////////////////////////////////////////////////////////////////////////////
+
+
+        //////////////  Spinneri  -> ///////////////////////////////////////////////////////////
+
+        //Luodaan ArrayAdapter sijainnille//
+        ArrayAdapter<String> adapterLocation = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_list_item_1, kieli_lista);
+        //Määritellään spinnerin asettelutyyli//
+        adapterLocation.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //lisätään adapteri spinneriin//
+        spinner.setAdapter(adapterLocation);
+
+        String kieli = spinner.getSelectedItem().toString();
+
+        ///////////////////////////////////////////////////////////////////////////////////////
+
+    }
+
+    public void sendToActivity(){
+        Intent intent = new Intent(getActivity().getBaseContext(), MainActivity.class);
+        startActivity(intent);
     }
 
     public ArrayList<String> sendInfo() {

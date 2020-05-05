@@ -28,14 +28,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        <TextView
+            <TextView
                 android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:includeFontPadding="false"
-                android:singleLine="false"
-                android:text="Malli tekstistä. Voit asetuksissa muuttaa tekstin ulkonäköä, kuten fonttikokoa, leveyttä, korkeutta sekä rivimäärää." />
+                android:singleLine="false" />
 
             <EditText
                 android:id="@+id/editText"
@@ -43,8 +42,8 @@
                 android:layout_height="50dp"
                 android:layout_marginTop="204dp"
                 android:ems="10"
-                android:inputType="textPersonName"
-                android:text="Muokkaa tekstiä" />
+                android:hint="Muokkaa tekstiä"
+                android:inputType="textPersonName" />
 
             <TextView
                 android:id="@+id/textView"
@@ -54,10 +53,11 @@
                 android:gravity="center"
                 android:text="TextView" />
 
+
             <LinearLayout
                 android:id="@+id/register_btn_wrapper"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="430dp"
                 android:layout_below="@+id/splash_logo_img"
                 android:orientation="vertical">
 
@@ -73,6 +73,13 @@
 
             </LinearLayout>
 
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="490dp"
+                android:text="TextView" />
+
         </FrameLayout>
 
     </LinearLayout>
@@ -83,7 +90,9 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:headerLayout="@layout/nav_header"
-        app:menu="@menu/drawer_menu" />
+        app:menu="@menu/drawer_menu" >
+
+    </com.google.android.material.navigation.NavigationView>
 
 </androidx.drawerlayout.widget.DrawerLayout>
 
